@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.taskManager.taskManagerService.Exception.BadRequestException;
 import com.taskManager.taskManagerService.domain.TaskManager;
+import com.taskManager.taskManagerService.domain.User;
 import com.taskManager.taskManagerService.repository.TaskManagerRepository;
+import com.taskManager.taskManagerService.repository.UserRepository;
 import com.taskManager.taskManagerService.service.TaskManagerService;
 
 @Service("taskManagerService")
@@ -17,6 +19,9 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 
 	@Autowired
 	private TaskManagerRepository taskManagerRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public Iterable<TaskManager> getAllTask() throws Exception {
@@ -40,7 +45,14 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 				task.setParentId(1);
 			}
 		}
-		taskManagerRepository.save(task);
+		TaskManager savedTask = taskManagerRepository.save(task);
+		User existignUser = userRepository.findOneByUserId(task.getUser().getUserId());
+		if(existignUser==null) {
+			throw new Exception("User not found in database to assign task");
+		} else {
+			existignUser.setTaskId(savedTask.getTaskId());
+			userRepository.save(existignUser);
+		}
 	}
 
 	@Override
@@ -82,6 +94,7 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 		}
 		
 
-	}
+	}	
+	
 	
 }
