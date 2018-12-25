@@ -69,6 +69,7 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 		if(existingTask==null) {
 			throw new BadRequestException("No existing record found iin Database!");
 		} else {
+			System.out.println("existingTask.getTaskId():::"+existingTask.getTaskId()+" taskId::"+taskId);
 			if(existingTask!=null && existingTask.getTaskId()!=taskId) {
 				throw new BadRequestException("No matching id found in Database!");
 			}
