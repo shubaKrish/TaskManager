@@ -28,6 +28,11 @@ public class Project {
 	@Transient
 	private User user;
 	@Transient
+	private int totalTask;
+	@Transient
+	private int completedTask;
+	
+	@Transient
 	public User getUser() {
 		return user;
 	}
@@ -64,5 +69,17 @@ public class Project {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+	public int getTotalTask() {
+		return totalTask;
+	}
+	public void setTotalTask(int totalTask) {
+		this.totalTask = totalTask;
+	}
 	
+	public int getCompletedTask() {
+		return completedTask;
+	}
+	public void setCompletedTask(int completedTask) {
+		this.completedTask = completedTask;
+	}
 }

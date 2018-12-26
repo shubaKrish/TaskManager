@@ -1,6 +1,6 @@
 package com.taskManager.taskManagerService.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -214,12 +214,17 @@ public class TaskManagerController {
 	@ResponseBody
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@RequestMapping(value = "/retrieve/projects", method = RequestMethod.GET, produces = "application/JSON")
-	@ApiOperation(value = "View a list of projects", response = Iterable.class)
-	public ResponseEntity<Iterable<Project>> retrieveProjects() {
+	@ApiOperation(value = "View a list of projects", response = List.class)
+	public ResponseEntity<List<Project>> retrieveProjects() {
 		
-		Iterable<Project> projects = null;
+		List<Project> projects = null;
 		try {
 			projects = projectService.getAllProjects();
+			for(Project proj: projects) {
+				System.out.println("proj id:::"+proj.getProjectId());
+				System.out.println("proj total task:::"+proj.getTotalTask());
+			}
+			
 		} catch (BadRequestException ex) {
 			System.out.println("Error occurred in retrieveProjects:::" + ex);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -230,4 +235,22 @@ public class TaskManagerController {
 		return new ResponseEntity<>(projects, HttpStatus.OK);
 
 	}	
+	
+	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@RequestMapping(value = "/update/projects/{projectId}", method = RequestMethod.POST, consumes = "application/JSON")
+	@ApiOperation(value = "create a project", response = String.class)
+	public ResponseEntity<String> updateProjectDetails(@PathVariable Integer projectId, @RequestBody Project project) {
+		try {
+			projectService.updateProject(projectId, project);
+		} catch (BadRequestException ex) {
+			System.out.println("Error occurred in updateProjectDetails:::" + ex);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (Exception ex) {
+			System.out.println("Error occurred in updateProjectDetails:::" + ex);
+			ex.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

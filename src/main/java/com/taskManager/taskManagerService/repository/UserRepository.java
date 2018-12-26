@@ -12,4 +12,5 @@ import com.taskManager.taskManagerService.domain.User;
 public interface UserRepository extends CrudRepository<User, Integer> {
 	
 	User findOneByUserId(int userId);
+	User findOneByProjectId(int projectId);
 }
