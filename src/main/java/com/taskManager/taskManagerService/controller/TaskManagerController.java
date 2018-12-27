@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taskManager.taskManagerService.Exception.BadRequestException;
+import com.taskManager.taskManagerService.domain.Parent;
 import com.taskManager.taskManagerService.domain.Project;
 import com.taskManager.taskManagerService.domain.TaskManager;
 import com.taskManager.taskManagerService.domain.User;
+import com.taskManager.taskManagerService.service.impl.ParentTaskServiceImpl;
 import com.taskManager.taskManagerService.service.impl.ProjectServiceImpl;
 import com.taskManager.taskManagerService.service.impl.TaskManagerServiceImpl;
 import com.taskManager.taskManagerService.service.impl.UserServiceImpl;
@@ -43,6 +45,10 @@ public class TaskManagerController {
 	@Autowired
 	@Resource(name = "projectService")
 	private ProjectServiceImpl projectService;
+	
+	@Autowired
+	@Resource(name = "parentTaskService")
+	private ParentTaskServiceImpl parentTaskService;
 
 	@ResponseBody
 	@CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -55,9 +61,11 @@ public class TaskManagerController {
 			listOfTask = taskManagerService.getAllTask();
 		} catch (BadRequestException ex) {
 			System.out.println("Error occurred in retrieveTaskManager:::" + ex);
+			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in retrieveTaskManager:::" + ex);
+			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(listOfTask, HttpStatus.OK);
@@ -252,5 +260,40 @@ public class TaskManagerController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@RequestMapping(value = "/add/parentTask", method = RequestMethod.POST, consumes = "application/JSON")
+	@ApiOperation(value = "create a new parent task", response = String.class)
+	public ResponseEntity<String> addParentTask(@RequestBody Parent parent) {
+		try {
+			parentTaskService.addParentTask(parent);
+		} catch (BadRequestException ex) {
+			System.out.println("Error occurred in addParentTask:::" + ex);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (Exception ex) {
+			System.out.println("Error occurred in addParentTask:::" + ex);
+			ex.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
+	@RequestMapping(value = "/retrieve/parentTasks", method = RequestMethod.GET, produces = "application/JSON")
+	@ApiOperation(value = "View a list of available parent task", response = Iterable.class)
+	public ResponseEntity<Iterable<Parent>> retrieveParentTasks() {
+		
+		Iterable<Parent> listOfTask = null;
+		try {
+			listOfTask = parentTaskService.getAllParentTasks();
+		} catch (Exception ex) {
+			System.out.println("Error occurred in retrieveTaskManager:::" + ex);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(listOfTask, HttpStatus.OK);
+
 	}
 }

@@ -29,10 +29,12 @@ public class TaskManager {
 	private Date endDate;
 	@Column(name="task",nullable=false)
 	private String task;
-	@Column(name="parentTask",nullable=true)
-	private String parentTask;
 	@Column(name="projectId",nullable=true)
 	private int projectId;	
+	
+	@Transient
+	private Parent parent;
+	
 	@Transient
 	private User user;
 	
@@ -86,11 +88,12 @@ public class TaskManager {
 	public void setTask(String task) {
 		this.task = task;
 	}
-	public String getParentTask() {
-		return parentTask;
+	public Parent getParent() {
+		return parent;
 	}
-	public void setParentTask(String parentTask) {
-		this.parentTask = parentTask;
+	public void setParent(Parent parent) {
+		this.parent = parent;
 	}
+	
 	
 }

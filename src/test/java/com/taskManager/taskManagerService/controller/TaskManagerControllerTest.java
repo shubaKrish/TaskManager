@@ -65,7 +65,7 @@ public class TaskManagerControllerTest {
            TaskManager task = new TaskManager();
            task.setEndDate(new Date(System.currentTimeMillis()));
            task.setStartDate(new Date(System.currentTimeMillis()));
-           task.setParentTask("workout");
+         //  task.setParentTask("workout");
            task.setTask("running");
            task.setPriority(1);
            task.setTaskId(1);
@@ -83,7 +83,7 @@ public class TaskManagerControllerTest {
 		TaskManager task = new TaskManager();
         task.setEndDate(new Date(System.currentTimeMillis()));
         task.setStartDate(new Date(System.currentTimeMillis()));
-        task.setParentTask("workout");
+       // task.setParentTask("workout");
         task.setTask("running");
         task.setPriority(1);
         task.setTaskId(1);
@@ -113,7 +113,7 @@ public class TaskManagerControllerTest {
            TaskManager task = new TaskManager();
            task.setEndDate(new Date(System.currentTimeMillis()));
            task.setStartDate(new Date(System.currentTimeMillis()));
-           task.setParentTask("workout");
+         //  task.setParentTask("workout");
            task.setTask("running");
            task.setPriority(1);
            task.setTaskId(1);
@@ -131,7 +131,7 @@ public class TaskManagerControllerTest {
 		TaskManager task = new TaskManager();
         task.setEndDate(new Date(System.currentTimeMillis()));
         task.setStartDate(new Date(System.currentTimeMillis()));
-        task.setParentTask("workout");
+        //task.setParentTask("workout");
         task.setTask("running");
         task.setPriority(1);
         task.setTaskId(1);
@@ -161,7 +161,7 @@ public class TaskManagerControllerTest {
            TaskManager task = new TaskManager();
            task.setEndDate(new Date(System.currentTimeMillis()));
            task.setStartDate(new Date(System.currentTimeMillis()));
-           task.setParentTask("workout");
+        //   task.setParentTask("workout");
            task.setTask("running");
            task.setPriority(1);
            task.setTaskId(1);
@@ -179,7 +179,7 @@ public class TaskManagerControllerTest {
            TaskManager task = new TaskManager();
            task.setEndDate(new Date(System.currentTimeMillis()));
            task.setStartDate(new Date(System.currentTimeMillis()));
-           task.setParentTask("workout");
+      //     task.setParentTask("workout");
            task.setTask("running");
            task.setPriority(1);
            task.setTaskId(1);
@@ -197,7 +197,7 @@ public class TaskManagerControllerTest {
 		TaskManager task = new TaskManager();
         task.setEndDate(new Date(System.currentTimeMillis()));
         task.setStartDate(new Date(System.currentTimeMillis()));
-        task.setParentTask("workout");
+       // task.setParentTask("workout");
         task.setTask("running");
         task.setPriority(1);
         task.setTaskId(1);
@@ -227,7 +227,7 @@ public class TaskManagerControllerTest {
            TaskManager task = new TaskManager();
            task.setEndDate(new Date(System.currentTimeMillis()));
            task.setStartDate(new Date(System.currentTimeMillis()));
-           task.setParentTask("workout");
+           //task.setParentTask("workout");
            task.setTask("running");
            task.setPriority(1);
            task.setTaskId(1);
