@@ -13,7 +13,6 @@ import com.taskManager.taskManagerService.domain.TaskManager;
 @Repository
 @Transactional
 public interface TaskManagerRepository extends CrudRepository<TaskManager, Integer> {
-    List<TaskManager> findAllByOrderByParentIdDesc();
     TaskManager findOneByTaskId(Integer taskId);
     @Query(value="select task.taskId,task.task,task.priority,task.parentId,"
     		+ "task.projectId,task.startDate,task.endDate, "

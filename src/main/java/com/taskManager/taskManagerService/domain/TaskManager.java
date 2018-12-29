@@ -21,7 +21,7 @@ public class TaskManager {
 	private int taskId;
 	@Column(name="parentId",nullable=true)
 	private int parentId;	
-	@Column(name="priority",nullable=false)
+	@Column(name="priority",nullable=true)
 	private int priority;	
 	@Column(name="startDate",nullable=false)
 	private Date startDate;	
@@ -29,7 +29,7 @@ public class TaskManager {
 	private Date endDate;
 	@Column(name="task",nullable=false)
 	private String task;
-	@Column(name="projectId",nullable=true)
+	@Column(name="projectId",nullable=false)
 	private int projectId;	
 	
 	@Transient

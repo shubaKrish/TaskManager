@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/v1")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Api(value = "taskmanager")
-public class TaskManagerController {
+public class ProjectManagerController {
 
 	@Autowired
 	@Resource(name = "taskManagerService")
@@ -61,11 +61,9 @@ public class TaskManagerController {
 			listOfTask = taskManagerService.getAllTask();
 		} catch (BadRequestException ex) {
 			System.out.println("Error occurred in retrieveTaskManager:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in retrieveTaskManager:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(listOfTask, HttpStatus.OK);
@@ -84,7 +82,6 @@ public class TaskManagerController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in saveTaskManager:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -102,7 +99,6 @@ public class TaskManagerController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in updateTaskManager:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -120,7 +116,6 @@ public class TaskManagerController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in endTaskManager:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -134,11 +129,10 @@ public class TaskManagerController {
 		try {
 			userService.addUser(user);
 		} catch (BadRequestException ex) {
-			System.out.println("Error occurred in saveTaskManager:::" + ex);
+			System.out.println("Error occurred in saveUserDetails:::" + ex);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
-			System.out.println("Error occurred in saveTaskManager:::" + ex);
-			ex.printStackTrace();
+			System.out.println("Error occurred in saveUserDetails:::" + ex);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -172,11 +166,10 @@ public class TaskManagerController {
 		try {
 			userService.updateUserDetails(user, userId);
 		} catch (BadRequestException ex) {
-			System.out.println("Error occurred in User:::" + ex);
+			System.out.println("Error occurred in updateUserDetails:::" + ex);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
-			System.out.println("Error occurred in USer:::" + ex);
-			ex.printStackTrace();
+			System.out.println("Error occurred in updateUserDetails:::" + ex);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -194,7 +187,6 @@ public class TaskManagerController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in deleteUserDetails:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -213,7 +205,6 @@ public class TaskManagerController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in saveTaskManager:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -227,12 +218,7 @@ public class TaskManagerController {
 		
 		List<Project> projects = null;
 		try {
-			projects = projectService.getAllProjects();
-			for(Project proj: projects) {
-				System.out.println("proj id:::"+proj.getProjectId());
-				System.out.println("proj total task:::"+proj.getTotalTask());
-			}
-			
+			projects = projectService.getAllProjects();			
 		} catch (BadRequestException ex) {
 			System.out.println("Error occurred in retrieveProjects:::" + ex);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -256,7 +242,6 @@ public class TaskManagerController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in updateProjectDetails:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -274,7 +259,6 @@ public class TaskManagerController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception ex) {
 			System.out.println("Error occurred in addParentTask:::" + ex);
-			ex.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -290,7 +274,7 @@ public class TaskManagerController {
 		try {
 			listOfTask = parentTaskService.getAllParentTasks();
 		} catch (Exception ex) {
-			System.out.println("Error occurred in retrieveTaskManager:::" + ex);
+			System.out.println("Error occurred in retrieveParentTasks:::" + ex);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(listOfTask, HttpStatus.OK);

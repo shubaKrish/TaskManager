@@ -16,7 +16,6 @@ public class UserServiceImpl implements UserService {
     
 	@Override
 	public void addUser(User user) throws Exception {
-		
 		userRepository.save(user);
 	}
 	
@@ -35,10 +34,6 @@ public class UserServiceImpl implements UserService {
 			throw new BadRequestException("User id is not matching!");
 
 		} else {
-			System.out.println("existingUser.getUserId()::"+user.getUserId());
-			System.out.println("existingUser.firstname::"+user.getFirstName());
-			System.out.println("user.getLastName():::"+user.getLastName());
-
 			existingUser.setEmployeeId(user.getEmployeeId());
 			existingUser.setFirstName(user.getFirstName());
 			existingUser.setLastName(user.getLastName());

@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackageClasses = {TaskManagerRepository.class, UserRepository.class})
-@PropertySource(value = {"classpath:application.properties"})
+//@PropertySource(value = {"classpath:application.properties"})
 @EnableSwagger2
 
 public class TaskManagerServiceApplication {

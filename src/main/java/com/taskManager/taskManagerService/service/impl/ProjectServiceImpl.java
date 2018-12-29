@@ -27,12 +27,12 @@ public class ProjectServiceImpl implements ProjectService {
 	public void addProject(Project project) throws Exception {
 		// TODO Auto-generated method stub
 		Project savedProject = projectRepository.save(project);
-		User user = userRepository.findOneByUserId(project.getUser().getUserId());
-		if(user==null) {
-			throw new Exception("unable to find the user in database to assign");
-		} else {
-			user.setProjectId(savedProject.getProjectId());
-			userRepository.save(user);
+		if(project.getUser()!=null) {
+			User user = userRepository.findOneByUserId(project.getUser().getUserId());
+			if(user!=null) {
+				user.setProjectId(savedProject.getProjectId());
+				userRepository.save(user);
+			}
 		}
 	}
 
@@ -46,11 +46,21 @@ public class ProjectServiceImpl implements ProjectService {
 			Project proj = new Project();
 			proj.setProjectId(((Number) result[0]).intValue());
 			proj.setProject((String)result[1]);
+			if(result[2]!=null) {
 			proj.setPriority(((Number) result[2]).intValue());
+			}
+			if(result[3]!=null) {
 			proj.setStartDate((Date)result[3]);
+			}
+			if(result[4]!=null) {
 			proj.setEndDate((Date)result[4]);
+			}
+			if(result[5]!=null) {
 			proj.setCompletedTask(((Number) result[5]).intValue());
+			}
+			if(result[6]!=null) {
 			proj.setTotalTask(((Number) result[6]).intValue());
+			}
 			User user = userRepository.findOneByProjectId(proj.getProjectId());
 			proj.setUser(user);
 			project.add(proj);
@@ -62,7 +72,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public void updateProject(Integer projectId, Project project) throws Exception {
 		// TODO Auto-generated method stub
-		if(projectId==0 && project==null) {
+		if(projectId==0 || project==null) {
 			throw new BadRequestException("No project details found!");
 		} else if(projectId!=project.getProjectId()) {
 			throw new BadRequestException("No matching id found in Request param!");
@@ -76,12 +86,12 @@ public class ProjectServiceImpl implements ProjectService {
 			existingProject.setEndDate(project.getEndDate());
 			existingProject.setProject(project.getProject());
 			projectRepository.save(existingProject);
-			User user = userRepository.findOneByUserId(project.getUser().getUserId());
-			if(user==null) {
-				throw new Exception("unable to find the user in database to assign");
-			} else {
-				user.setProjectId(project.getProjectId());
-				userRepository.save(user);
+			if(project.getUser()!=null) {
+				User user = userRepository.findOneByUserId(project.getUser().getUserId());
+				if(user!=null) {				
+					user.setProjectId(project.getProjectId());
+					userRepository.save(user);
+				}
 			}
 		}
 		

@@ -34,8 +34,12 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 				TaskManager task = new TaskManager();
 				task.setTaskId(((Number) result[0]).intValue());
 				task.setTask((String) result[1]);
-				task.setPriority(((Number) result[2]).intValue());				
+				if(result[2]!=null) {
+				task.setPriority(((Number) result[2]).intValue());	
+				}
+				if(result[4]!=null) {
 				task.setProjectId(((Number) result[4]).intValue());
+				}
 				if(result[5]!=null) {
 					task.setStartDate((Date) result[5]);
 				}
@@ -63,21 +67,17 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 
 	}
 
-	@Override
-	public Optional<TaskManager> getSingleTask(Integer task_id) throws Exception {
-		return taskManagerRepository.findById(task_id);
-
-	}
+	
 
 	@Override
 	public void addTask(TaskManager task) throws Exception {
 		TaskManager savedTask = taskManagerRepository.save(task);
-		User existignUser = userRepository.findOneByUserId(task.getUser().getUserId());
-		if (existignUser == null) {
-			throw new Exception("User not found in database to assign task");
-		} else {
-			existignUser.setTaskId(savedTask.getTaskId());
-			userRepository.save(existignUser);
+		if(task!= null && task.getUser()!=null) {
+			User existignUser = userRepository.findOneByUserId(task.getUser().getUserId());
+			if (existignUser !=null) {
+				existignUser.setTaskId(savedTask.getTaskId());
+				userRepository.save(existignUser);
+			}
 		}
 	}
 
@@ -111,5 +111,6 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 		}
 
 	}
+
 
 }
