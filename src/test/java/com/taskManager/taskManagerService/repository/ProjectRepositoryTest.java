@@ -24,8 +24,6 @@ public class ProjectRepositoryTest {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	@Autowired
-	private TaskManagerRepository taskManagerRepository;
 	
     @Before
     public void setup() {
@@ -44,26 +42,6 @@ public class ProjectRepositoryTest {
 	  Assert.assertEquals("test project", availableProject.getProject());
 	}
 	
-	/*@Test
-	public void testFindTaskByParentUserJoin() {	  
-		 TaskManager task = new TaskManager();
-		 task.setTaskId(1);
-		  task.setTask("test task");
-		  task.setPriority(1);
-		  task.setProjectId(1);
-		  task.setParentId(1);
-		  task.setStartDate(new Date(System.currentTimeMillis()));
-		  taskManagerRepository.save(task);	
-		  
-		  Project project = new Project();
-		  project.setProjectId(1);
-		  project.setProject("test project");
-		  project.setStartDate(new Date(System.currentTimeMillis()));
-		  projectRepository.save(project);
-		  
-		  List<Object[]> availableProject = projectRepository.findByJoin();
-		 // Assert.assertEquals("test task", availableTask.get(1).toString());
-		  
-	}*/
+	
 	
 }

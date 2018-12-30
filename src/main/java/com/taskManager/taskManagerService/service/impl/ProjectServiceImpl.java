@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.taskManager.taskManagerService.Exception.BadRequestException;
 import com.taskManager.taskManagerService.domain.Project;
@@ -15,6 +16,7 @@ import com.taskManager.taskManagerService.repository.UserRepository;
 import com.taskManager.taskManagerService.service.ProjectService;
 
 @Service("projectService")
+@Transactional
 public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
@@ -22,23 +24,26 @@ public class ProjectServiceImpl implements ProjectService {
     
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
 	@Override
 	public void addProject(Project project) throws Exception {
-		// TODO Auto-generated method stub
+		User user = null;
 		Project savedProject = projectRepository.save(project);
+
 		if(project.getUser()!=null) {
-			User user = userRepository.findOneByUserId(project.getUser().getUserId());
-			if(user!=null) {
-				user.setProjectId(savedProject.getProjectId());
-				userRepository.save(user);
-			}
+			 user = userRepository.findOneByUserId(project.getUser().getUserId());
+		}	
+		if(user!=null) {
+			user.setProjectId(savedProject.getProjectId());
+			userRepository.save(user);
 		}
 	}
 
 	@Override
 	public List<Project> getAllProjects() throws Exception {
-		// TODO Auto-generated method stub
 		List<Object[]> results = projectRepository.findByJoin();
 		List<Project> project = new ArrayList<>();
 		if(results!=null && results.size()>0) {
@@ -81,18 +86,25 @@ public class ProjectServiceImpl implements ProjectService {
 		if(existingProject==null) {
 			throw new BadRequestException("No existing project details found in database to update!");
 		} else {
+			User user = null;
+			if(project.getUser()!=null) {
+				user = userRepository.findOneByUserId(project.getUser().getUserId());
+			}	
+			User findExistingUserWithSameProjectId = userRepository.findOneByProjectId(projectId);
+			if(findExistingUserWithSameProjectId!=null && findExistingUserWithSameProjectId.getUserId()!=user.getUserId()) {
+				throw new BadRequestException("You cannot assign project to multiple users!");
+			}
 			existingProject.setPriority(project.getPriority());
 			existingProject.setStartDate(project.getStartDate());
 			existingProject.setEndDate(project.getEndDate());
 			existingProject.setProject(project.getProject());
 			projectRepository.save(existingProject);
-			if(project.getUser()!=null) {
-				User user = userRepository.findOneByUserId(project.getUser().getUserId());
-				if(user!=null) {				
-					user.setProjectId(project.getProjectId());
-					userRepository.save(user);
-				}
+			
+			if(user!=null) {				
+				user.setProjectId(project.getProjectId());
+				userRepository.save(user);
 			}
+			
 		}
 		
 	}

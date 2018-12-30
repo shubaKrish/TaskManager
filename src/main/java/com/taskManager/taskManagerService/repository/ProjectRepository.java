@@ -23,7 +23,7 @@ public interface ProjectRepository extends CrudRepository<Project, Integer> {
 			"from project proj \r\n" + 
 			"left join task_manager task1\r\n" + 
 			"on task1.projectId = proj.projectId\r\n" + 
-			"and task1.endDate IS NOT NULL\r\n" + 
+			"and task1.endDate IS NOT NULL and task1.status='Complete'\r\n" + 
 			"group by proj.projectId, proj.project,proj.priority,proj.startDate,proj.endDate\r\n" + 
 			") as sub\r\n" + 
 			"left join task_manager task2\r\n" + 

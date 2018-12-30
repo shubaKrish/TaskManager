@@ -16,7 +16,7 @@ public interface TaskManagerRepository extends CrudRepository<TaskManager, Integ
     TaskManager findOneByTaskId(Integer taskId);
     @Query(value="select task.taskId,task.task,task.priority,task.parentId,"
     		+ "task.projectId,task.startDate,task.endDate, "
-    		+ "parent.parentTask,usr.userId "
+    		+ "parent.parentTask,usr.userId,task.status "
     		+ "from task_manager task "
     		+ "left join parent parent on parent.parentId = task.parentId\r\n" + 
     		"left join user usr on usr.taskId = task.taskId" ,nativeQuery=true)

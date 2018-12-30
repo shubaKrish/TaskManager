@@ -3,7 +3,6 @@ package com.taskManager.taskManagerService.service.impl;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +59,9 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 					user.setUserId(userId);
 					task.setUser(user);
 				}
+				if(result[9]!=null) {
+					task.setStatus((String) result[9]);
+				}
 				tasks.add(task);
 			}
 		}
@@ -105,7 +107,8 @@ public class TaskManagerServiceImpl implements TaskManagerService {
 				existingTask.setPriority(task.getPriority());
 				taskManagerRepository.save(existingTask);
 			} else {
-				existingTask.setEndDate(new Date(System.currentTimeMillis()));
+				existingTask.setStatus(task.getStatus());
+				existingTask.setEndDate(task.getEndDate());
 				taskManagerRepository.save(existingTask);
 			}
 		}

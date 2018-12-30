@@ -32,6 +32,9 @@ public class TaskManager {
 	@Column(name="projectId",nullable=false)
 	private int projectId;	
 	
+	@Column(name="status",nullable=true)
+	private String status;		
+	
 	@Transient
 	private Parent parent;
 	
@@ -95,5 +98,11 @@ public class TaskManager {
 		this.parent = parent;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
 }
